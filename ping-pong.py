@@ -8,6 +8,8 @@ display.set_caption('PING_PONG')
 clock = time.Clock()
 FPS = 60
 background = transform.scale(image.load('stol.png'), (700, 500))
+# speed_x = 2
+# speed_y = 2
 
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, player_speed, width, lenght):
@@ -39,21 +41,31 @@ class Player(GameSprite):
         if keys_pressed[K_s] and self.rect.y < 320:
             self.rect.y += self.speed
 class Ball(GameSprite):
-    def __init__(self, player_image, player_x, player_y, player_speed, width, lenght):
+    def __init__(self, player_image, player_x, player_y, player_speed, width, lenght, speed_y, speed_x):
         super().__init__(player_image, player_x, player_y, player_speed,width,lenght)
-    def update(myach):
-        if myach.rect.y != 0:
-            myach.rect.y -= speed_y
-            if myach.rect.x != 690:
-                myach.rect.x += speed_x
+        self.speed_y = speed_y
+        self.speed_x = speed_x
+    def update(self):
+        self.rect.y += self.speed_y
+        self.rect.x += self.speed_x
+        if self.rect.y >= 470:
+            self.speed_y *= -1
+        if self.rect.y <= 0:
+            self.speed_y *= -1
+        if sprite.collide_rect(myach, player1):
+            self.speed_y *= 1
+            self.speed_x *= -1
+        if sprite.collide_rect(myach, player):
+            self.speed_y *= 1
+            self.speed_x *= -1
+
 
 
 player = Player(('rak.png'), 0, 250, 6, 40, 175)
 player1 = Player(('rak2.png'), 660, 250, 6, 40, 175)
-myach = Ball(('myac1.png'), 330, 250, 2, 40, 40)
+myach = Ball(('myac1.png'), 330, 250, 2, 40, 40, 2, 2)
 
-speed_x = 2
-speed_y = 2
+
 
 game = True
 finish = False
@@ -77,6 +89,5 @@ while game:
 
         myach.reset()
         myach.update()
-        
-        
+
         display.update()
