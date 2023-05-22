@@ -1,7 +1,14 @@
-#Создай собственный Шутер!
-
 from pygame import *
 from random import randint
+font.init()
+font = font.Font(None, 70)
+win_r = font.render('RED WIN!', True, (255, 0, 0))
+win_b = font.render('BLUE WIN!', True, (0, 0, 153))
+i1 = 0
+i2 = 0
+s_1 = font.render(str(i1), True, (0, 0, 153))
+s_2 = font.render(str(i2), True, (255, 0, 0))
+
 
 window = display.set_mode((700, 500))
 display.set_caption('PING_PONG')
@@ -63,7 +70,7 @@ class Ball(GameSprite):
 
 player = Player(('rak.png'), 0, 250, 6, 40, 175)
 player1 = Player(('rak2.png'), 660, 250, 6, 40, 175)
-myach = Ball(('myac1.png'), 330, 250, 2, 40, 40, 2, 2)
+myach = Ball(('myac1.png'), 330, 250, 2, 40, 40, 5, 5)
 
 
 
@@ -89,5 +96,13 @@ while game:
 
         myach.reset()
         myach.update()
+        
+        window.blit(s_1, (630, 25)) 
+        window.blit(s_2, (50, 25)) 
+
+        if myach.rect.x >= 750:  
+            i2 += 1
+        if myach.rect.x <= -50:
+            i1 += 1
 
         display.update()
